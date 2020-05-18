@@ -1,24 +1,43 @@
 import React, { Component,useState } from "react";
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import styled from 'styled-components'
+import TextInput from './Parts/TextInput'
+import NumberInput from './Parts/NumberInput'
+import TextArea from './Parts/TextArea'
+import LineBreaker from './Parts/Linebreaker'
+import {MdEdit,MdDelete} from 'react-icons/md'
+import _ from 'lodash'
 
-const FormPart = ({part,provided,snapshot}) => {
+const BoxProp = styled.div`
+  display:flex;
+  justify-content:flex-end;
+  svg{
+    width:1.5rem;
+    height:1.5rem;
+    margin:0 5px;
+    cursor:pointer;
+  }
+`
+
+const FormPart = ({part,provided,snapshot,removePart}) => {
+    const [open,setOpen] = useState(false)
     let a = <div>undefined</div>
     switch(part.HtmlType){
         case "h2":
-            a = <h2>{part.label}</h2>
+            a = <h2 style={{margin:"0"}}>{part.label}</h2>
             break;
         case "break":
-            a = <div>-------------------------------------</div>
+            a = <LineBreaker/>
             break;
         case "text":
-            a = <input type="text"/>
+            a = <TextInput open={open} part={part} />
             break;
         case "number":
-            a = <input type="number"/>
+            a = <NumberInput open={open} part={part}/>
             break;
         case "textarea":
-            a = <textarea></textarea>
+            a = <TextArea open={open} part={part}/>
             break;
         case "date":
             a = <input type="date"/>
@@ -35,6 +54,16 @@ const FormPart = ({part,provided,snapshot}) => {
             provided.draggableProps.style
             )}
         >
+          {part.HtmlType != "break" ?
+            <BoxProp>
+              <MdEdit onClick={()=>setOpen(true)}/>
+              <MdDelete onClick={()=>removePart(part.id)}/>
+            </BoxProp>
+          :
+            <BoxProp>
+              <MdDelete onClick={()=>removePart(part.id)}/>
+            </BoxProp>
+          }
             {a}
         </div>
     )
@@ -58,9 +87,9 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
-
+  direction:'rtl',
   // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+  background: isDragging ? "lightgreen" : "white",
 
   // styles we need to apply on draggables
   ...draggableStyle
@@ -69,11 +98,18 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
-  width: "100%"
+  width: "50%",
+  margin:"0 auto"
 });
 
 
 const App = ({items,setItems}) => {
+
+    const removePart = (id) =>{
+      let a = [...items]
+      let d = _.filter(a,function(o){return o.id != id})
+      setItems(d)
+    }
 
     const onDragEnd = (result) =>{
         console.log(result)
@@ -102,6 +138,7 @@ const App = ({items,setItems}) => {
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <FormPart 
+                        removePart={removePart}
                         provided={provided}
                         snapshot={snapshot}
                         part={item}
@@ -117,71 +154,5 @@ const App = ({items,setItems}) => {
     )
 
 }
-
-
-// class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       items: this.props.items
-//     };
-//     this.onDragEnd = this.onDragEnd.bind(this);
-//   }
-
-//   onDragEnd(result) {
-//     // dropped outside the list
-//     console.log(result)
-//     if (!result.destination) {
-//       return;
-//     }
-
-//     const items = reorder(
-//       this.state.items,
-//       result.source.index,
-//       result.destination.index
-//     );
-
-//     this.setState({
-//       items
-//     });
-//   }
-
-//   // Normally you would want to split things out into separate components.
-//   // But in this example everything is just done in one place for simplicity
-//   render() {
-//     return (
-//       <DragDropContext onDragEnd={this.onDragEnd}>
-//         <Droppable droppableId="droppable">
-//           {(provided, snapshot) => (
-//             <div
-//               {...provided.droppableProps}
-//               ref={provided.innerRef}
-//               style={getListStyle(snapshot.isDraggingOver)}
-//             >
-//               {this.props.items.map((item, index) => (
-//                 <Draggable key={item.id} draggableId={item.id} index={index}>
-//                   {(provided, snapshot) => (
-//                     <div
-//                       ref={provided.innerRef}
-//                       {...provided.draggableProps}
-//                       {...provided.dragHandleProps}
-//                       style={getItemStyle(
-//                         snapshot.isDragging,
-//                         provided.draggableProps.style
-//                       )}
-//                     >
-//                       {item.content}
-//                     </div>
-//                   )}
-//                 </Draggable>
-//               ))}
-//               {provided.placeholder}
-//             </div>
-//           )}
-//         </Droppable>
-//       </DragDropContext>
-//     );
-//   }
-// }
 
 export default App;

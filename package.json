@@ -8,7 +8,5 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "react-beautiful-dnd": "^13.0.0"
-  }
+  "dependencies": {}
 }

@@ -21,6 +21,7 @@ const EditorLayout = [
     // } from module
     {
         icon:(<MdGamepad/>),
+        heb:'כותרת',
         name:'Header',
         label:'טקסט להזנה ככותרת',
         HtmlType:'h2',
@@ -30,6 +31,7 @@ const EditorLayout = [
     },
     {
         icon:(<MdGamepad/>),
+        heb:'קו מפריד',
         name:'Line Breaker',
         label:'',
         HtmlType:'break',
@@ -39,6 +41,7 @@ const EditorLayout = [
     },
     {
         icon:(<MdGamepad/>),
+        heb:'בחירה מרשימה',
         name:'Dropdown',
         label:'',
         HtmlType:'dropdown',
@@ -49,6 +52,7 @@ const EditorLayout = [
     {
         icon:(<MdGamepad/>),
         name:'text-input',
+        heb:'קלט - טקסט',
         label:'טקסט להזנה ככותרת',
         HtmlType:'text',
         validation:'',
@@ -58,6 +62,7 @@ const EditorLayout = [
     {
         icon:(<MdGamepad/>),
         name:'number-input',
+        heb:'קלט - מספר',
         label:'טקסט להזנה ככותרת',
         HtmlType:'number',
         validation:'',
@@ -67,6 +72,7 @@ const EditorLayout = [
     {
         icon:(<MdGamepad/>),
         name:'textarea',
+        heb:'קלט ארוך',
         label:'טקסט להזנה ככותרת',
         HtmlType:'textarea',
         validation:'',
@@ -76,6 +82,7 @@ const EditorLayout = [
     {
         icon:(<MdGamepad/>),
         name:'date',
+        heb:'קלט - תאריך',
         label:'טקסט להזנה ככותרת',
         HtmlType:'date',
         validation:'',
@@ -84,70 +91,30 @@ const EditorLayout = [
     }
 ]
 
-const EmptyForm = []
-
-const fullForm = [
-    {
-        name:'Header',
-        label:'טקסט להזנה ככותרת',
-        HtmlType:'h2',
-        validation:'',
-        required:false
-    }
-]
-
-
-
-
-
-const Box = ({ name ,icon,prop ,nextId,addTo}) => {
-  const item = { name, type: 'item'}
-  const [{ opacity }, drag] = useDrag({
-    item,
-    end(item, monitor) {
-      const dropResult = monitor.getDropResult()
-      if (item && dropResult) {
-        let alertMessage = ''
-        const isDropAllowed =
-          dropResult.allowedDropEffect === 'any' ||
-          dropResult.allowedDropEffect === dropResult.dropEffect
-        if (isDropAllowed) {
-          const isCopyAction = dropResult.dropEffect === 'copy'
-          const actionName = isCopyAction ? 'copied' : 'moved'
-          alertMessage = `You ${actionName} ${item.name} into ${dropResult.name}!`
-        } else {
-          alertMessage = `You cannot ${dropResult.dropEffect} an item into the ${dropResult.name}`
-        }
-        alert(alertMessage)
-      }
-    },
-    collect: (monitor) => ({
-      opacity: monitor.isDragging() ? 0.4 : 1,
-    }),
-  })
+const Box = ({ name ,icon,prop ,nextId,addTo,setNext}) => {
   return (
-    <Tool ref={drag} style={{ opacity }}>
-      {icon}
-      {name}
+    <Tool >
+      
       <button onClick={()=>{
-        let d = {...prop}
-        d.id = (nextId+1).toString()
-        console.log(d)
-        addTo(d)
+        let d = {...prop};
+        d.id = (nextId).toString();
+        setNext(nextId+1)
+        addTo(d);
       }}>
-        add it
+        הוסף
       </button>
+      {name}
     </Tool>
   )
 }
 
-const Toolbox = ({addTo,list}) => {
+const Toolbox = ({addTo,list,nextId,setNext}) => {
     return (
         <ToolBoxCon>
             {
                 EditorLayout.map((x)=>{
                     return (
-                        <Box nextId={list.length} prop={x} name={x.name} addTo={addTo} icon={x.icon}/>
+                        <Box nextId={nextId} setNext={setNext} prop={x} name={x.heb} addTo={addTo} icon={x.icon}/>
                     )
                 })
             }
@@ -158,16 +125,10 @@ const Toolbox = ({addTo,list}) => {
 
 
 
-const initalState = [
-
-]
-
-
 const Builder = () => {
     const [formComponent,setForm] = useState([])
     const [state,setState] = useState([])
-
-
+    const [nextId,setNext] = useState(0)
     useEffect(()=>{
       console.log(state)
     },[state])
@@ -182,7 +143,7 @@ const Builder = () => {
                 <Header>header</Header>
                 <Main>
                     <Full items={state} setItems={setState}/>
-                    <Toolbox list={state} addTo={addTo}/>
+                    <Toolbox nextId={nextId} setNext={setNext} list={state} addTo={addTo}/>
                 </Main>
             </BuilderCon>
         </DndProvider>
@@ -211,6 +172,7 @@ const Main = styled.div`
 const ToolBoxCon = styled.div`
     display:flex;
     flex-direction:column;
+    margin-right:4rem;
 `
 const Tool = styled.div`
     display:flex;
@@ -218,7 +180,7 @@ const Tool = styled.div`
     border-radius:10px;
     margin:5px;
     border: 1px dashed gray;
-    align-items:center;
+    justify-content:space-between;
     svg{
         margin-right:5px;
     }
