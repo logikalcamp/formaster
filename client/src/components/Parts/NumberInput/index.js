@@ -6,7 +6,7 @@ const Container = styled.div`
     flex-direction:column;
 `
 
-const NumberInput = ({part}) => {
+const NumberInput = ({open,part}) => {
     return (
         <Container>
           <label>{part.label}</label>

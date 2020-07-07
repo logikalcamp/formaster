@@ -6,6 +6,8 @@ import TextInput from './Parts/TextInput'
 import NumberInput from './Parts/NumberInput'
 import TextArea from './Parts/TextArea'
 import LineBreaker from './Parts/Linebreaker'
+import Header from './Parts/Header'
+import Dropdown from './Parts/Dropdown'
 import {MdEdit,MdDelete} from 'react-icons/md'
 import _ from 'lodash'
 
@@ -22,30 +24,36 @@ const BoxProp = styled.div`
 
 const FormPart = ({part,provided,snapshot,removePart}) => {
     const [open,setOpen] = useState(false)
+    const closeModal = () => setOpen(false)
     let a = <div>undefined</div>
     switch(part.HtmlType){
         case "h2":
-            a = <h2 style={{margin:"0"}}>{part.label}</h2>
+            a = <Header open={open} clm={closeModal} part={part} />
             break;
         case "break":
             a = <LineBreaker/>
             break;
         case "text":
-            a = <TextInput open={open} part={part} />
+            a = <TextInput open={open} clm={closeModal} part={part} />
             break;
         case "number":
-            a = <NumberInput open={open} part={part}/>
+            a = <NumberInput open={open} clm={closeModal} part={part}/>
             break;
         case "textarea":
-            a = <TextArea open={open} part={part}/>
+            a = <TextArea open={open} clm={closeModal} part={part}/>
             break;
         case "date":
             a = <input type="date"/>
             break;
+        case "dropdown":
+            a = <Dropdown open={open} clm={closeModal} part={part}/>
+            break;
+        
     }
     // return a
     return(
         <div
+            className={open ? "pbof":"abof"}
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
@@ -85,12 +93,19 @@ const grid = 8;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  padding: grid * 2,
+  padding: grid ,
   margin: `0 0 ${grid}px 0`,
   direction:'rtl',
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "white",
-
+  alignItems: "center",
+  display:" flex",
+  background: "white",
+  flexDirection: "row-reverse",
+  justifyContent: "space-between",
+  zIndex:"2",
+  maxHeight:"60px",
+  height:"60px",
   // styles we need to apply on draggables
   ...draggableStyle
 });
@@ -99,6 +114,7 @@ const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
   width: "50%",
+  position:'relative',
   margin:"0 auto"
 });
 

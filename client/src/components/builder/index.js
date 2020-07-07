@@ -43,7 +43,7 @@ const EditorLayout = [
         icon:(<MdGamepad/>),
         heb:'בחירה מרשימה',
         name:'Dropdown',
-        label:'',
+        label:'יש לבחור מהרשימה',
         HtmlType:'dropdown',
         validation:'',
         required:false,
@@ -140,7 +140,9 @@ const Builder = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <BuilderCon>
-                <Header>header</Header>
+                <Header>
+                    הרכבת טפסים
+                </Header>
                 <Main>
                     <Full items={state} setItems={setState}/>
                     <Toolbox nextId={nextId} setNext={setNext} list={state} addTo={addTo}/>
@@ -159,6 +161,15 @@ const Header = styled.div`
     display:flex;
     position:sticky;
     z-index:2;
+    text-align:center;
+    padding:1rem 0;
+    background:#6098ff;
+    justify-content:center;
+    font-size:26px;
+    color:white;
+    box-shadow:2px 2px 10px white;
+    margin-bottom:2rem;
+    font-weight:bold;
     top:0;
     left:0;
     right:0;

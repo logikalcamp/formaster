@@ -6,6 +6,7 @@ const Main = styled.div`
     margin-bottom:0rem;
     border-bottom:1px solid #828282;
     height:1px;
+    width:100%;
 `
 
 const Linebreaker = () => (

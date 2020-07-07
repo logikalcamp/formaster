@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+
+.pbof{
+  border:1px solid red;
+  border-bottom:0;
+}
+.abof{
+  
+  border:1px  solid red;
+}
