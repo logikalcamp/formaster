@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import DropDownSettings from "../../../utils/DropDownSettings";
-import Table from "../../../utils/TableOfGrid";
+import Table from "../../../utils/TableWithOpt";
 
 const Container = styled.div`
   width: 50%;
@@ -24,83 +24,57 @@ const Div = styled.div`
   margin-bottom: 10px;
 `;
 
-const TableS = styled.table`
-  thead {
-    tr {
-      th {
-        text-align: right;
-      }
-    }
-  }
-`;
-
-const Main = ({ open, part, clm, EditPart }) => {
+const Select = ({ open, part, clm, EditPart }) => {
   const [realOpt, setReal] = useState([]);
   const [options, setOptions] = useState([]);
   const [labe, setLabel] = useState("");
-  const [keyof, setKey] = useState("");
+  const [name, setName] = useState("");
   // const [newArr,setArr] = useState(arr)
   return (
     <React.Fragment>
       <Container>
         <label>{part.generate.label}</label>
-        <TableS>
-          <thead>
-            <tr>
-              {realOpt.map((x) => {
-                return <th>{x.label}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {realOpt.map((a) => {
-                return (
-                  <td>
-                    <input type="text" />
-                  </td>
-                );
-              })}
-            </tr>
-          </tbody>
-        </TableS>
+        <select>
+          {realOpt.map((x) => {
+            return <option value={x.value}>{x.label}</option>;
+          })}
+        </select>
       </Container>
       <Setting>
         {open && (
           <DropDownSettings callback={clm}>
             <div>
               <Div>
-                <label>הכותרת שתוצג מעל השדה</label>
+                <label>כותרת שתופיע מעל התא</label>
                 <input
                   type="text"
-                  placeholder="הזנת כותרת "
+                  placeholder="יש להזין את הכותרת"
                   value={labe}
                   onChange={(e) => setLabel(e.target.value)}
                 />
               </Div>
               <Div>
-                <label>שם הפרמטר</label>
+                <label>שם הפרמטר שיופיע בדטה בייס</label>
                 <input
                   type="text"
-                  placeholder="הזנת שם פרמטר כפי שיופיע בDB"
-                  value={keyof}
-                  onChange={(e) => setKey(e.target.value)}
+                  placeholder="הזן שם פרמטר"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </Div>
               <Table arr={options} setArr={setOptions} />
+
               <button
                 onClick={() => {
                   console.log(part);
                   // setLabel(val)
                   clm();
                   let d = { ...part };
-                  d.generate.keys = keyof;
+                  d.generate.name = name;
                   d.generate.label = labe;
-                  d.generate.columns = options;
+                  d.generate.options = options;
                   EditPart(d.id, d);
-                  // let newVal = [...options]
-                  let newVal = JSON.parse(JSON.stringify(options));
-                  setReal(newVal);
+                  setReal(options);
                 }}
               >
                 שמירה
@@ -114,4 +88,4 @@ const Main = ({ open, part, clm, EditPart }) => {
   );
 };
 
-export default Main;
+export default Select;
