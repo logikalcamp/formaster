@@ -1,11 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Builder from './components/builder'
+import AppRouter from './components/router'
 
 function App() {
   return (
-    <Builder/>
+    <AppRouter/>
   );
 }
 

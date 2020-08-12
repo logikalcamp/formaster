@@ -4,9 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "hatal-utils": "^1.1.2",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0",
+    "mongoose": "^5.9.28",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  }
 }

@@ -16,10 +16,10 @@ const Container = styled.div`
     top: 50%;
     left: 50%;
     margin: auto;
-    width: 300px;
-    margin-top: -150px;
-    height: 300px;
-    margin-left: -150px;
+    width: 600px;
+    margin-top: -300px;
+    height: 600px;
+    margin-left: -300px;
     background: white;
     border-radius: 10px;
     z-index: 4;
@@ -46,12 +46,11 @@ const SettingsCon = styled.div`
     border-top:none;
 `
 
-const Modal = ({children,clm,open}) => {
+const Modal = ({children,clm}) => {
     return (
         <React.Fragment>
-            {/* <Background onClick={()=>clm()}/>
-            <Container>{children}</Container> */}
-            <SettingsCon open={open}>{children}</SettingsCon>
+            <Background onClick={()=>clm()}/>
+             <Container>{children}</Container> 
         </React.Fragment>
     )
 }

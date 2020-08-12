@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.2",
     "cra-template": "1.0.3",
     "form-generator-react": "^2.0.0",
+    "hatal-utils": "^1.1.1",
     "lodash": "^4.17.15",
+    "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dnd": "^10.0.2",
@@ -13,9 +16,12 @@
     "react-dom": "^16.13.1",
     "react-form-builder2": "^0.5.6",
     "react-icons": "^3.10.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-textarea-autosize": "^8.2.0",
     "styled-components": "^5.1.0"
   },
+  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

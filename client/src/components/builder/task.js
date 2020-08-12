@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import {Draggable} from 'react-beautiful-dnd';
+import React from './node_modules/react'
+import styled from './node_modules/styled-components'
+import {Draggable} from './node_modules/react-beautiful-dnd';
 
 
 const Container = styled.div`

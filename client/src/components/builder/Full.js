@@ -8,11 +8,16 @@ import TextArea from './Parts/TextArea'
 import LineBreaker from './Parts/Linebreaker'
 import Header from './Parts/Header'
 import Dropdown from './Parts/Dropdown'
+import Description from './Parts/Description'
+import URLparamerter from './Parts/UrlPart'
+import GridComp from './Parts/Grid'
 import {MdEdit,MdDelete} from 'react-icons/md'
 import _ from 'lodash'
 
 const BoxProp = styled.div`
   display:flex;
+  position:absolute;
+  left:10px;
   justify-content:flex-end;
   svg{
     width:1.5rem;
@@ -22,34 +27,41 @@ const BoxProp = styled.div`
   }
 `
 
-const FormPart = ({part,provided,snapshot,removePart}) => {
+const FormPart = ({part,provided,snapshot,removePart,EditPart}) => {
     const [open,setOpen] = useState(false)
     const closeModal = () => setOpen(false)
     let a = <div>undefined</div>
     switch(part.HtmlType){
         case "h2":
-            a = <Header open={open} clm={closeModal} part={part} />
+            a = <Header open={open} EditPart={EditPart} clm={closeModal} part={part} />
             break;
         case "break":
             a = <LineBreaker/>
             break;
         case "text":
-            a = <TextInput open={open} clm={closeModal} part={part} />
+            a = <TextInput open={open} clm={closeModal} EditPart={EditPart} part={part} />
             break;
         case "number":
-            a = <NumberInput open={open} clm={closeModal} part={part}/>
+            a = <NumberInput open={open} clm={closeModal} EditPart={EditPart} part={part}/>
             break;
         case "textarea":
-            a = <TextArea open={open} clm={closeModal} part={part}/>
+            a = <TextArea open={open} clm={closeModal} part={part} EditPart={EditPart}/>
             break;
         case "date":
             a = <input type="date"/>
             break;
         case "dropdown":
-            a = <Dropdown open={open} clm={closeModal} part={part}/>
+            a = <Dropdown open={open} clm={closeModal} part={part} EditPart={EditPart}/>
             break;
-        
-    }
+        case "p":
+            a = <Description open={open} EditPart={EditPart} clm={closeModal} part={part} />
+            break;
+        case "url_var":
+            a = <URLparamerter open={open} clm={closeModal} EditPart={EditPart} part={part} />
+            break;
+        case "grid":
+            a = <GridComp open={open} clm={closeModal} EditPart={EditPart} part={part} />
+      }
     // return a
     return(
         <div
@@ -93,8 +105,9 @@ const grid = 8;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
-  padding: grid ,
-  margin: `0 0 ${grid}px 0`,
+  marginBottom:"10px",
+  padding: "1%" ,
+  // margin: `0 0 ${grid}px 0`,
   direction:'rtl',
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "white",
@@ -104,8 +117,11 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   flexDirection: "row-reverse",
   justifyContent: "space-between",
   zIndex:"2",
-  maxHeight:"60px",
-  height:"60px",
+      /* max-height: 60px; */
+   minHeight: "60px",
+    // overflowY: 'overlay',
+  // position: "absolute",
+  // width: "96%",
   // styles we need to apply on draggables
   ...draggableStyle
 });
@@ -119,8 +135,29 @@ const getListStyle = isDraggingOver => ({
 });
 
 
-const App = ({items,setItems}) => {
+const App = ({items,setItems,form,setForm}) => {
 
+    // const AddState = (val) => {
+    //   let d = [...state]
+    //   d.push(val)
+    //   setState(d)
+    // }
+
+    // const EditState = (val,index) => {
+    //   let d = [...state]
+    //   d[index] = val
+    //   setState(d)
+    // } 
+
+    const EditPart = (id,newVal) => {
+      let a = [...items]
+      a.map((z)=>{
+        if(z.id == id){
+          z = newVal
+        }
+      })
+      setItems(a)
+    }
     const removePart = (id) =>{
       let a = [...items]
       let d = _.filter(a,function(o){return o.id != id})
@@ -141,6 +178,7 @@ const App = ({items,setItems}) => {
     
         setItems(itemsArr)
     }
+
     return (
         <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
@@ -155,6 +193,7 @@ const App = ({items,setItems}) => {
                   {(provided, snapshot) => (
                     <FormPart 
                         removePart={removePart}
+                        EditPart={EditPart}
                         provided={provided}
                         snapshot={snapshot}
                         part={item}
@@ -172,3 +211,43 @@ const App = ({items,setItems}) => {
 }
 
 export default App;
+
+
+
+/*
+generateFormState = [
+  {
+    type:'title',
+    value:'the title itself'
+  },{
+    type:'description',
+    value:'the description istself'
+  },{
+    type:'break_line'
+  },{
+    type:'text',
+    label:'the label'
+  },{
+    type:'number',
+    label:'the label'
+  },{
+    type:'textarea',
+    label:'the label'
+  },{
+    type:'date',
+    label:'the label'
+  },{
+    type:'url_parameter',
+    key:'the key of the url parameter'
+  },{
+    type:'multiple',
+    label:'the label',
+    option:[
+      {
+        value:'',
+        label:''
+      }
+    ]
+  }
+]
+*/
