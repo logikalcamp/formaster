@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import DropDownSettings from "../../../utils/DropDownSettings";
-import Table from "../../../utils/TableOfGrid";
+import React, { useState } from "react"
+import styled from "styled-components"
+import DropDownSettings from "../../../utils/DropDownSettings"
+import Table from "../../../utils/TableOfGrid"
 
 const Container = styled.div`
   width: 50%;
   margin-left: 48%;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const Setting = styled.div`
   position: relative;
@@ -16,13 +16,13 @@ const Setting = styled.div`
   top: -8%;
   left: 10px;
   padding: 0 8px;
-`;
+`
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
   margin-bottom: 10px;
-`;
+`
 
 const TableS = styled.table`
   thead {
@@ -32,13 +32,13 @@ const TableS = styled.table`
       }
     }
   }
-`;
+`
 
-const Main = ({ open, part, clm, EditPart }) => {
-  const [realOpt, setReal] = useState([]);
-  const [options, setOptions] = useState([]);
-  const [labe, setLabel] = useState("");
-  const [keyof, setKey] = useState("");
+const Main = ({ open, part, clm, editField }) => {
+  const [realOpt, setReal] = useState([])
+  const [options, setOptions] = useState([])
+  const [labe, setLabel] = useState("")
+  const [keyof, setKey] = useState("")
   // const [newArr,setArr] = useState(arr)
   return (
     <React.Fragment>
@@ -48,7 +48,7 @@ const Main = ({ open, part, clm, EditPart }) => {
           <thead>
             <tr>
               {realOpt.map((x) => {
-                return <th>{x.label}</th>;
+                return <th>{x.label}</th>
               })}
             </tr>
           </thead>
@@ -59,7 +59,7 @@ const Main = ({ open, part, clm, EditPart }) => {
                   <td>
                     <input type="text" />
                   </td>
-                );
+                )
               })}
             </tr>
           </tbody>
@@ -71,12 +71,7 @@ const Main = ({ open, part, clm, EditPart }) => {
             <div>
               <Div>
                 <label>הכותרת שתוצג מעל השדה</label>
-                <input
-                  type="text"
-                  placeholder="הזנת כותרת "
-                  value={labe}
-                  onChange={(e) => setLabel(e.target.value)}
-                />
+                <input type="text" placeholder="הזנת כותרת " value={labe} onChange={(e) => setLabel(e.target.value)} />
               </Div>
               <Div>
                 <label>שם הפרמטר</label>
@@ -90,17 +85,17 @@ const Main = ({ open, part, clm, EditPart }) => {
               <Table arr={options} setArr={setOptions} />
               <button
                 onClick={() => {
-                  console.log(part);
+                  console.log(part)
                   // setLabel(val)
-                  clm();
-                  let d = { ...part };
-                  d.generate.keys = keyof;
-                  d.generate.label = labe;
-                  d.generate.columns = options;
-                  EditPart(d.id, d);
+                  clm()
+                  let d = { ...part }
+                  d.generate.keys = keyof
+                  d.generate.label = labe
+                  d.generate.columns = options
+                  editField(d.id, d)
                   // let newVal = [...options]
-                  let newVal = JSON.parse(JSON.stringify(options));
-                  setReal(newVal);
+                  let newVal = JSON.parse(JSON.stringify(options))
+                  setReal(newVal)
                 }}
               >
                 שמירה
@@ -111,7 +106,7 @@ const Main = ({ open, part, clm, EditPart }) => {
         )}
       </Setting>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main

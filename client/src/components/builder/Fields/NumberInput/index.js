@@ -1,33 +1,12 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import DropDownSettings from "../../../utils/DropDownSettings";
+import React, { useState } from "react"
+import styled from "styled-components"
+import DropDownSettings from "../../../utils/DropDownSettings"
 
-const Setting = styled.div`
-  position: relative;
-  width: 100%;
-  top: -8%;
-  left: 10px;
-  padding: 0 8px;
-`;
-
-const Container = styled.div`
-  width: 50%;
-  margin-left: 48%;
-  display: flex;
-  flex-direction: column;
-`;
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  margin-bottom: 10px;
-`;
-
-const TextInput = ({ open, part, clm, EditPart }) => {
-  const [label, setLabel] = useState("");
-  const [keyof, setKey] = useState("");
+const TextInput = ({ open, part, clm, editField }) => {
+  const [label, setLabel] = useState("")
+  const [keyof, setKey] = useState("")
   // const [placeHolder,setPlaceHolder] = useState('טקסט לבחירתך')
-  console.log(part);
+  console.log(part)
   return (
     <React.Fragment>
       <Container>
@@ -39,12 +18,7 @@ const TextInput = ({ open, part, clm, EditPart }) => {
           <DropDownSettings callback={clm}>
             <Div>
               <label>שינוי כותרת</label>
-              <input
-                type="text"
-                value={label}
-                placeholder="הזנת כותרת "
-                onChange={(e) => setLabel(e.target.value)}
-              />
+              <input type="text" value={label} placeholder="הזנת כותרת " onChange={(e) => setLabel(e.target.value)} />
             </Div>
             <Div>
               <label>שם פרטמר</label>
@@ -57,14 +31,14 @@ const TextInput = ({ open, part, clm, EditPart }) => {
             </Div>
             <button
               onClick={() => {
-                console.log(part);
+                console.log(part)
                 // setLabel(val)
-                clm();
-                let d = { ...part };
-                d.generate.keys = keyof;
-                d.generate.label = label;
+                clm()
+                let d = { ...part }
+                d.generate.keys = keyof
+                d.generate.label = label
                 // d.generate.options = options
-                EditPart(d.id, d);
+                editField(d.id, d)
                 // setReal(options)
               }}
             >
@@ -75,7 +49,28 @@ const TextInput = ({ open, part, clm, EditPart }) => {
         )}
       </Setting>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default TextInput;
+const Setting = styled.div`
+  position: relative;
+  width: 100%;
+  top: -8%;
+  left: 10px;
+  padding: 0 8px;
+`
+
+const Container = styled.div`
+  width: 50%;
+  margin-left: 48%;
+  display: flex;
+  flex-direction: column;
+`
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin-bottom: 10px;
+`
+
+export default TextInput
