@@ -14,11 +14,13 @@
     "react-dnd": "^10.0.2",
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
+    "react-draggable": "^4.4.2",
     "react-form-builder2": "^0.5.6",
     "react-icons": "^3.10.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-textarea-autosize": "^8.2.0",
+    "recoil": "0.0.10",
     "styled-components": "^5.1.0"
   },
   "proxy": "http://localhost:3000",

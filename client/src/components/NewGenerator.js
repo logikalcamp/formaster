@@ -5,7 +5,7 @@ import 'hatal-utils/dist/index.css'
 
 const Background = styled.div`
     width:100%;
-    z-index:1;
+    ${'' /* z-index:1; */}
     height:100vh;
     position:fixed;
     background:-webkit-linear-gradient(90deg,#eaeaea 66%,#6098ff 66%)
