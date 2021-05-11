@@ -7,7 +7,7 @@
     "cra-template": "1.0.3",
     "form-generator-react": "^2.0.0",
     "hatal-utils": "^1.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
