@@ -14,7 +14,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "hatal-utils": "^1.1.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment": "^2.27.0",
     "mongoose": "^5.9.28",
     "morgan": "^1.10.0",
